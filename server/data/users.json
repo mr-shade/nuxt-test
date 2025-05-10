@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "role": "admin",
+    "createdAt": "2023-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "role": "editor",
+    "createdAt": "2023-01-02T00:00:00.000Z"
+  },
+  {
+    "id": "3",
+    "name": "Bob Johnson",
+    "email": "bob@example.com",
+    "role": "user",
+    "createdAt": "2023-01-03T00:00:00.000Z"
+  }
+]
