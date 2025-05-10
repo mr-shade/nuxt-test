@@ -16,15 +16,16 @@ export default defineEventHandler(async (event) => {
   // GET /api/notes/:id - Get a note by ID
   if (method === 'GET') {
     try {
-      const note = await db.select().from(notes).where(eq(notes.id, id)).get();
-      
+      const results = await db.select().from(notes).where(eq(notes.id, id));
+      const note = results[0];
+
       if (!note) {
         throw createError({
           statusCode: 404,
           message: `Note with ID ${id} not found`
         });
       }
-      
+
       return note;
     } catch (error) {
       console.error(`Error fetching note ${id}:`, error);
@@ -39,25 +40,25 @@ export default defineEventHandler(async (event) => {
   if (method === 'PUT') {
     try {
       const body = await readBody(event);
-      
+
       if (!body.title || !body.content) {
         throw createError({
           statusCode: 400,
           message: 'Title and content are required'
         });
       }
-      
+
       const now = new Date();
       const updatedNote = {
         title: body.title,
         content: body.content,
         updatedAt: now
       };
-      
+
       await db.update(notes)
         .set(updatedNote)
         .where(eq(notes.id, id));
-      
+
       return { id, ...updatedNote };
     } catch (error) {
       console.error(`Error updating note ${id}:`, error);

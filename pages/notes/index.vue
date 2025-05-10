@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="text-3xl font-bold mb-6">Notes</h1>
-    
+
     <!-- Create Note Form -->
     <div class="bg-white p-6 rounded-lg shadow-md mb-8">
       <h2 class="text-xl font-semibold mb-4">Create New Note</h2>
@@ -23,27 +23,27 @@
         </div>
       </form>
     </div>
-    
+
     <!-- Notes List -->
     <div class="bg-white p-6 rounded-lg shadow-md">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-semibold">Your Notes</h2>
         <UButton color="gray" @click="refreshNotes" :loading="isPending" icon="i-heroicons-arrow-path" />
       </div>
-      
+
       <div v-if="isPending" class="text-center py-4">
         <UIcon name="i-heroicons-arrow-path" class="animate-spin h-6 w-6 mx-auto text-gray-500" />
         <p class="mt-2 text-gray-500">Loading notes...</p>
       </div>
-      
+
       <div v-else-if="error" class="bg-red-50 p-4 rounded-md text-red-700">
         <p>Error loading notes. Please try again.</p>
       </div>
-      
+
       <div v-else-if="notes && notes.length === 0" class="text-center py-4 text-gray-500">
         <p>No notes found. Create your first note above.</p>
       </div>
-      
+
       <div v-else>
         <ul class="divide-y divide-gray-200">
           <li v-for="note in notes" :key="note.id" class="py-4">
@@ -56,9 +56,9 @@
                 </p>
               </div>
               <div class="flex space-x-2">
-                <UButton color="gray" icon="i-heroicons-pencil-square" size="sm" 
+                <UButton color="gray" icon="i-heroicons-pencil-square" size="sm"
                   @click="navigateToEdit(note.id)" />
-                <UButton color="red" icon="i-heroicons-trash" size="sm" 
+                <UButton color="red" icon="i-heroicons-trash" size="sm"
                   @click="confirmDelete(note)" />
               </div>
             </div>
@@ -66,7 +66,7 @@
         </ul>
       </div>
     </div>
-    
+
     <!-- Delete Confirmation Modal -->
     <UModal v-model="isDeleteModalOpen">
       <div class="p-4">
@@ -84,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-import { Note } from '~/server/db/schema';
+import type { Note } from '~/server/db/schema';
 
 // State for new note form
 const newNote = ref({
@@ -110,22 +110,22 @@ async function createNote() {
   if (!newNote.value.title || !newNote.value.content) {
     return;
   }
-  
+
   isCreating.value = true;
-  
+
   try {
     await $fetch('/api/notes', {
       method: 'POST',
       body: newNote.value
     });
-    
+
     // Reset form
     newNote.value.title = '';
     newNote.value.content = '';
-    
+
     // Refresh notes list
     refreshNotes();
-    
+
     // Show success toast
     useToast().add({
       title: 'Success',
@@ -158,21 +158,21 @@ function confirmDelete(note: Note) {
 // Delete a note
 async function deleteNote() {
   if (!noteToDelete.value) return;
-  
+
   isDeleting.value = true;
-  
+
   try {
     await $fetch(`/api/notes/${noteToDelete.value.id}`, {
       method: 'DELETE'
     });
-    
+
     // Refresh notes list
     refreshNotes();
-    
+
     // Close modal
     isDeleteModalOpen.value = false;
     noteToDelete.value = null;
-    
+
     // Show success toast
     useToast().add({
       title: 'Success',
