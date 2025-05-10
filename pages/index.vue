@@ -7,8 +7,9 @@
       <ul class="list-disc pl-5 space-y-2">
         <li>Server-side rendering</li>
         <li>API routes</li>
-        <li>Database integration (simulated with JSON)</li>
+        <li>Database integration with Turso and Drizzle ORM</li>
         <li>Responsive UI with Nuxt UI</li>
+        <li><NuxtLink to="/notes" class="text-blue-600 hover:underline">Notes Application</NuxtLink> - Try our new notes app!</li>
       </ul>
     </div>
   </div>

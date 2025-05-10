@@ -7,6 +7,7 @@
           <NuxtLink to="/" class="text-gray-700 hover:text-blue-600">Home</NuxtLink>
           <NuxtLink to="/about" class="text-gray-700 hover:text-blue-600">About</NuxtLink>
           <NuxtLink to="/users" class="text-gray-700 hover:text-blue-600">Users</NuxtLink>
+          <NuxtLink to="/notes" class="text-gray-700 hover:text-blue-600">Notes</NuxtLink>
         </div>
       </nav>
     </header>
